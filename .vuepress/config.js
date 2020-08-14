@@ -7,7 +7,7 @@ module.exports = {
       'link',
       {
         rel: 'icon',
-        href: '/favicon.ico',
+        href: '/small.png',
       },
     ],
     [
@@ -104,12 +104,12 @@ module.exports = {
         link: 'https://vuepress-theme-reco.recoluan.com',
       },
     ],
-    logo: '/logo.jpg',
+    logo: '/small.png',
     search: true, //展示搜索
     searchMaxSuggestions: 10,
     lastUpdated: 'Last Updated',
     author: 'jimmy', //  作者
-    authorAvatar: '/avatar.jpg', //  作者头像
+    authorAvatar: '/small.png', //  作者头像
     record: 'xxxx',
     startYear: '2020',
     locales: {
