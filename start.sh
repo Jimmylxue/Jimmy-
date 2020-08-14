@@ -8,7 +8,7 @@ cnpm install && cnpm run build
 docker rm -f myBlog &> /dev/null
 
 # 重启容器
-docker run -d --restart=on-failure:5 \
+docker run -d --restart=on-failure:5\
     -p 80:80 \
-    -v $PWD/public:usr/share/nginx/html \
+    -v $PWD/public:/usr/share/nginx/html \
     --name myBlog nginx
