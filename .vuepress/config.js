@@ -36,12 +36,12 @@ module.exports = {
         icon: 'reco-date',
       },
       {
-        text: 'Docs',
+        text: 'About',
         icon: 'reco-message',
         items: [
           {
-            text: 'vuepress-reco',
-            link: '/docs/theme-reco/',
+            text: 'about-author',
+            link: '/docs/introduct/aboutme',
           },
         ],
       },
@@ -51,7 +51,7 @@ module.exports = {
         items: [
           {
             text: 'GitHub',
-            link: 'https://github.com/recoluan',
+            link: 'https://gitee.com/jimmyxuexue',
             icon: 'reco-github',
           },
         ],
@@ -74,6 +74,7 @@ module.exports = {
         text: 'Tag',
       },
     },
+    // 下访导航栏
     friendLink: [
       {
         title: 'CSDN',
@@ -111,6 +112,14 @@ module.exports = {
     authorAvatar: '/avatar.jpg', //  作者头像
     record: 'xxxx',
     startYear: '2020',
+    locales: {
+      '/': {
+        lang: 'zh-CN',
+      },
+      '/en/': {
+        lang: 'en-US',
+      },
+    },
   },
   markdown: {
     lineNumbers: true,
