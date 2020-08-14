@@ -10,5 +10,5 @@ docker rm -f myblog &> /dev/null
 # 重启容器
 docker run -d --restart=on-failure:5\
     -p 80:80 \
-    -v $PWD/dist:/usr/share/nginx/html \
+    -v $PWD/public:/usr/share/nginx/html \
     --name myblog nginx
