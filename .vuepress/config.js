@@ -21,6 +21,7 @@ module.exports = {
   theme: 'reco', // 主题
   themeConfig: {
     huawei: true,
+    mode: 'dark', // 默认黑色主题
     noFoundPageByTencent: false, // 关闭404带来的页面
     // 博客配置
     nav: [
