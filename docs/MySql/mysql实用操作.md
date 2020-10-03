@@ -4,11 +4,12 @@ date: 2020-10-01
 sidebar: auto
 categories:
   - 数据库
+  - 小技巧
 tags:
   - mysql
 ---
 
-## MySql 高频实用操作
+## MySql 高频实用操作 -- 持续更新
 
 ### 获取一个表中某个字段去掉重复之后的个数，并得出每种字段的个数
 
