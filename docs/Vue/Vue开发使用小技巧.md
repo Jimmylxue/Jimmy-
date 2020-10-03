@@ -1,5 +1,5 @@
 ---
-title: MySql高频实用操作
+title: Vue开发实用小技巧
 date: 2020-10-03
 sidebar: auto
 categories:
