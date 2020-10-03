@@ -6,7 +6,7 @@ sticky:
   - 置顶
   - 3
 categories:
-  - Vue源码
+  - Vue
 tags:
   - 架构
   - 源码

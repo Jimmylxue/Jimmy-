@@ -6,7 +6,7 @@ categories:
   - 数据库
   - 小技巧
 tags:
-  - mysql
+  - vue
 ---
 
 ## Vue 开发实用小技巧 -- 持续更新
@@ -33,3 +33,37 @@ tags:
     plugins: [createPersiste()],
   })
 ```
+
+### Vue 中的懒加载
+
+> 毕设开发的过程中可能涉及到的数据量比较小，所以不怎么会出现需要懒加载的情况，但是这个在工作中就是非常非常重要的一个知识点了。懒加载的功能和分页其实是非常像的，就是一次性不会给太多的数据。
+
+懒加载的作用：
+
+- 界面的加载速度会有非常明显的提升
+- 节省带宽
+- 不必要加载无用（用户刷不到的数据） 减轻了服务器的压力
+
+#### [vue-lazylaod](https://www.npmjs.com/package/vue-lazyload)
+
+- 引入 CDN 形式
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200713200853648.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70)
+
+- 脚手架开发模式
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200713200905272.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70)
+
+  ![在这里插入图片描述](https://img-blog.csdnimg.cn/20200713201019252.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70)
+
+其中的参数：
+
+- `error`表示的是当图片加载失败时会使用的图片地址
+- `loading`表示的是图片处在加载状态时会显示的图片
+- `attempt`表示图片会加载的次数（当加载失败以后会继续加载的次数）
+
+当配置好了这个之后，就可以在页面中使用了，原来图片的连接时写在`src`下，现在写在`v-lazy`里面即可
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200713201345697.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70)
+
+以上便是图片的懒加载，只有当页面使用到图片了之后，才会去加载所以的内容(即使后端一次性将全部的资源一次返回（七八百条也一样）之后再图片懒加载的时候才会去加载，并不会一次性的将七八百条都渲染)
