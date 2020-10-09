@@ -184,3 +184,58 @@ shallowRef 本质
 
 - 一般情况下我们使用 ref 和 reactive 即可
 - 只有在需要监听数据量比较大（层次深）的时候，我们才使用 shallowRef/shallowReactive
+
+#### toRaw
+
+> 找到引用的初始数据，主要是为了提升性能
+
+使用和不使用的区别
+
+- 使用 reactive 创建的对象 默认是会创建成一个 Proxy  对象 自带监听功能
+- 使用 toRaw(proxy 对象) 传递一个 proxy 对象 可以将 proxy 对象引用的原始数据导出来 我们修改原始数据， proxy 数据也会修改 是不会造成页面的重新渲染的
+- 正常情况下，我们使用 reactive 创建的数据 一旦是发生改变，就会默认开启监听 去自动的修改 UI 界面， 单这个也是属于极其消耗性能的
+
+demo
+
+```
+  const state = reactive({ name: 'Jimmy', age: 22 })
+  const refss = ref({ name: 'jack' })
+  const obj = toRaw(state)
+  const obj2 = toRaw(refss)
+  console.log(state) // Proxy {name: "Jimmy", age: 22}
+  console.log(obj) //{name: "Jimmy", age: 22}
+  console.log(refss) // RefImpl {_rawValue: {…}, _shallow: false, __v_isRef: true, _value: Proxy}
+    console.log(obj2) // RefImpl {_rawValue: {…}, _shallow: false, __v_isRef: true, _value: Proxy}
+    console.log(obj3)  //  {name: "jack"}
+  两个对象数据是一样的，区别在于是不是Proxy 对象  是不是具有响应式功能
+```
+
+注意点：
+
+- 如果是 toRaw()获取的是 ref 创建出来的响应式数据，那么直接 toRaw(ref 对象)是没有用的，原因是因为 ref 对象本质是包装成 reactive 对象，所以想要获取 ref 的原始数据，就要加上.value，如`toRaw(ref对象.value)`
+
+#### markRaw
+
+> 永远不会被追踪，markRaw()的返回值是经过处理的原对象
+
+一个对象只要被 markRaw()方法修饰过一次之后，及时再经历 ref(),或者 reactive()的处理，也是不会变成响应式的数据的。
+
+原理
+
+- markRaw()方法会给对象加上一个 `__v_skip: true` 属性，加了这个之后就不会成为响应式的数据了。
+
+demo
+
+```
+  setup() {
+    let obj = { name: 'Jimmy', age: 22 }
+    console.log(obj) // {name: "Jimmy", age: 22}
+    obj = markRaw(obj)
+    console.log(obj) //  {name: "Jimmy", age: 22, __v_skip: true}
+    let state = reactive(obj)
+    function change() {
+      state.name = 'xuexue'
+    }
+    return { state, change }
+  },
+```
