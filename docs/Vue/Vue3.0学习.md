@@ -1,3 +1,16 @@
+---
+title: Vue3.0 api学习记录
+date: 2020-10-10
+sidebar: auto
+sticky:
+  - 置顶
+  - 5
+categories:
+  - Vue
+tags:
+  - vue
+---
+
 ## Vue3.0
 
 Vue3.0 和 Vue2.x 之间并不是推翻重来，有很多地方还是集成了 Vue2.x 的，所以学会 Vue3.0 的前提是对 Vue2.x 有一定的了解  
