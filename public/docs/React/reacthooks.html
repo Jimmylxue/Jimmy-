@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>React Hooks基础使用 | jimmy的个人空间</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/small.png">
+    <meta name="description" content="jimmy_study">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.f07c2460.css" as="style"><link rel="preload" href="/assets/js/app.9ff872a9.js" as="script"><link rel="preload" href="/assets/js/3.76c72bef.js" as="script"><link rel="preload" href="/assets/js/1.0c580891.js" as="script"><link rel="preload" href="/assets/js/15.770d7082.js" as="script"><link rel="prefetch" href="/assets/js/10.c16b16c3.js"><link rel="prefetch" href="/assets/js/11.b4c5a952.js"><link rel="prefetch" href="/assets/js/12.32ca13d5.js"><link rel="prefetch" href="/assets/js/13.9e21fca0.js"><link rel="prefetch" href="/assets/js/14.d6c6f185.js"><link rel="prefetch" href="/assets/js/16.08d17bd4.js"><link rel="prefetch" href="/assets/js/17.00487775.js"><link rel="prefetch" href="/assets/js/18.21b8daef.js"><link rel="prefetch" href="/assets/js/19.a530e76b.js"><link rel="prefetch" href="/assets/js/20.ec901ddf.js"><link rel="prefetch" href="/assets/js/21.80da4185.js"><link rel="prefetch" href="/assets/js/22.9ec45f35.js"><link rel="prefetch" href="/assets/js/23.3cdfd4ab.js"><link rel="prefetch" href="/assets/js/24.f9bdb8da.js"><link rel="prefetch" href="/assets/js/25.c4b0ca83.js"><link rel="prefetch" href="/assets/js/26.01d9163a.js"><link rel="prefetch" href="/assets/js/27.ea4d5687.js"><link rel="prefetch" href="/assets/js/28.b32a9a41.js"><link rel="prefetch" href="/assets/js/29.311cdc26.js"><link rel="prefetch" href="/assets/js/30.92193d10.js"><link rel="prefetch" href="/assets/js/31.b3701216.js"><link rel="prefetch" href="/assets/js/32.263820ce.js"><link rel="prefetch" href="/assets/js/33.fa2f5ab1.js"><link rel="prefetch" href="/assets/js/34.6244cf70.js"><link rel="prefetch" href="/assets/js/35.dad5f0c1.js"><link rel="prefetch" href="/assets/js/36.3ce961d7.js"><link rel="prefetch" href="/assets/js/37.8e6b16ea.js"><link rel="prefetch" href="/assets/js/38.d0102067.js"><link rel="prefetch" href="/assets/js/39.7c16f6d7.js"><link rel="prefetch" href="/assets/js/4.6d5af41e.js"><link rel="prefetch" href="/assets/js/40.476f6276.js"><link rel="prefetch" href="/assets/js/41.2264ce03.js"><link rel="prefetch" href="/assets/js/5.075ce251.js"><link rel="prefetch" href="/assets/js/6.0a775aa3.js"><link rel="prefetch" href="/assets/js/7.3d128d63.js"><link rel="prefetch" href="/assets/js/8.1467d35d.js"><link rel="prefetch" href="/assets/js/9.0530f413.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f07c2460.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1c920fb4><div data-v-1c920fb4><div id="loader-wrapper" class="loading-wrapper" data-v-4cd7a24a data-v-1c920fb4 data-v-1c920fb4><div class="loader-main" data-v-4cd7a24a><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-6ef27168 data-v-1c920fb4 data-v-1c920fb4><h3 class="title" style="display:none;" data-v-6ef27168 data-v-6ef27168>jimmy的个人空间</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6ef27168 data-v-6ef27168><input type="password" value="" data-v-6ef27168> <span data-v-6ef27168>Konck! Knock!</span> <button data-v-6ef27168>OK</button></label> <div class="footer" style="display:none;" data-v-6ef27168 data-v-6ef27168><span data-v-6ef27168><i class="iconfont reco-theme" data-v-6ef27168></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6ef27168>vuePress-theme-reco</a></span> <span data-v-6ef27168><i class="iconfont reco-copyright" data-v-6ef27168></i> <a data-v-6ef27168><span data-v-6ef27168>jimmy</span>
+            
+          <span data-v-6ef27168>2020 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-1c920fb4><header class="navbar" data-v-1c920fb4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/small.png" alt="jimmy的个人空间" class="logo"> <span class="site-name">jimmy的个人空间</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/introduct/aboutme.html" class="nav-link"><i class="iconfont undefined"></i>
+  about-author
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://gitee.com/jimmyxuexue" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/React/reacthooks.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en/" class="nav-link"><i class="iconfont undefined"></i>
+  en-US
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1c920fb4></div> <aside class="sidebar" data-v-1c920fb4><div class="personal-info-wrapper" data-v-44c89ab2 data-v-1c920fb4><img src="/small.png" alt="author-avatar" class="personal-img" data-v-44c89ab2> <h3 class="name" data-v-44c89ab2>
+    jimmy
+  </h3> <div class="num" data-v-44c89ab2><div data-v-44c89ab2><h3 data-v-44c89ab2>24</h3> <h6 data-v-44c89ab2>文章</h6></div> <div data-v-44c89ab2><h3 data-v-44c89ab2>18</h3> <h6 data-v-44c89ab2>标签</h6></div></div> <hr data-v-44c89ab2></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/introduct/aboutme.html" class="nav-link"><i class="iconfont undefined"></i>
+  about-author
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://gitee.com/jimmyxuexue" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/React/reacthooks.html" aria-current="page" class="nav-link router-link-exact-active router-link-active"><i class="iconfont undefined"></i>
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en/" class="nav-link"><i class="iconfont undefined"></i>
+  en-US
+</a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-6ef27168 data-v-1c920fb4><h3 class="title" style="display:none;" data-v-6ef27168 data-v-6ef27168>React Hooks基础使用</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6ef27168 data-v-6ef27168><input type="password" value="" data-v-6ef27168> <span data-v-6ef27168>Konck! Knock!</span> <button data-v-6ef27168>OK</button></label> <div class="footer" style="display:none;" data-v-6ef27168 data-v-6ef27168><span data-v-6ef27168><i class="iconfont reco-theme" data-v-6ef27168></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6ef27168>vuePress-theme-reco</a></span> <span data-v-6ef27168><i class="iconfont reco-copyright" data-v-6ef27168></i> <a data-v-6ef27168><span data-v-6ef27168>jimmy</span>
+            
+          <span data-v-6ef27168>2020 - </span>
+          2021
+        </a></span></div></div> <div data-v-1c920fb4><main class="page"><div class="page-title" style="display:none;"><h1>React Hooks基础使用</h1> <div data-v-d5d1b660><i class="iconfont reco-account" data-v-d5d1b660><span data-v-d5d1b660>jimmy</span></i> <i class="iconfont reco-date" data-v-d5d1b660><span data-v-d5d1b660>2020-10-08</span></i> <!----> <i class="iconfont reco-tag tags" data-v-d5d1b660><span class="tag-item" data-v-d5d1b660>react</span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="reacthooks"><a href="#reacthooks" class="header-anchor">#</a> ReactHooks</h2> <p>react 创建组件的方式有两种，分别时<strong>纯函数组件</strong>和<strong>类组件</strong>，实际上函数组件和类组件的差别还是非常大的，开发中类组件给人的感觉是很长的一大串代码，实际上<strong>组件的最佳写法应该是函数，并不是类</strong>。<br>
+函数组件的缺陷在于：</p> <ol><li>纯函数组件时无状态的组件</li> <li>纯函数组件没有生命周期</li> <li>纯函数组件没有 this</li> <li>纯函数组件组件本质上也是只能时一个纯函数</li></ol> <p>最终目标：
+希望我们写起组件来，能够像<strong>写纯函数一样轻，同时还具有类函数的一系列功能</strong></p> <h3 id="hooks"><a href="#hooks" class="header-anchor">#</a> Hooks</h3> <blockquote><p>hooks 的意思是钩子，本质上是为了实现写纯函数组件，需要一些状态等其他信息，就用钩子，将外部信息钩进来。</p></blockquote> <p>react 默认提供了四种常用的钩子</p> <ul><li>useState()</li> <li>useContext()</li> <li>useReducer()</li> <li>useEffect()</li></ul> <p>不同的钩子函数可以钩入不同的外部功能，并且着些都含有<code>use</code>前缀，所以 React 规定，钩子一律是使用<code>use</code>为前缀，我们自己自定义的钩子也是要遵守这个规定使用<code>use</code>为前缀。</p> <h3 id="usestate"><a href="#usestate" class="header-anchor">#</a> useState</h3> <blockquote><p>状态钩子 在函数组件中引用这个就拥有了状态</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>  import { useState } from 'react'
+  const [state, setState] = useState(0)
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>可以通过结构赋值的方式，解构出一个 state 值，和一个 setState()改变状态的方法</p> <p>计数器案例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  function UseState() {
+    const [state, setState] = useState(0)
+    // 使用 useState 可以为我们创建出一个状态，  可以分别结构出 类似于 类组件的  state 和 setState
+
+    const change = () =&gt; {
+      setState(state + 1)
+    }
+    return (
+      &lt;div&gt;
+        &lt;h3&gt;hello world react_hooks&lt;/h3&gt;
+        &lt;p&gt;count:{state}&lt;/p&gt;
+        &lt;button onClick={change}&gt;change&lt;/button&gt;
+      &lt;/div&gt;
+    )
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><p>注意点：</p> <ul><li>结构出来的名字并不是固定只能是 state，是可以自定义的，如: <code>const [name,setName] = useState('Jimmy')</code></li></ul> <h3 id="usecontext"><a href="#usecontext" class="header-anchor">#</a> useContext()</h3> <blockquote><p>共享状态钩子</p></blockquote> <p>使用步骤</p> <ul><li>父组件共享数据<br>
+父组件使用<code>React.createContext()</code>创建一个组件容器，可以通过 value 属性来开放可被子组件共享的数据。</li> <li>子组件使用 useContext()共享状态钩子，可以钩出父组件共享出来的数据</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>  import React, { useContext } from 'react'
+
+  function UserContext() {
+    const Conatiner = React.createContext()
+    // 使用 React.createContext() 创建出一个父容器  这个父容器可以通过 value属性 传递共享的数据  子组件可以使用 useContext() 钩子，钩出数据
+
+    const Achild = () =&gt; {
+      // 通过  useContext()  钩子  可以获取到其他组件共享出来的状态   实现不同组件之间的共享
+      const { name } = useContext(Conatiner)
+      return (
+        &lt;div&gt;
+          &lt;p&gt;我是Achild函数组件,作者是{name}&lt;/p&gt;
+        &lt;/div&gt;
+      )
+    }
+
+    const Bchild = () =&gt; {
+      const { name } = useContext(Conatiner)
+      return (
+        &lt;div&gt;
+          &lt;p&gt;我是Bchild函数组件,作者是{name}&lt;/p&gt;
+        &lt;/div&gt;
+      )
+    }
+
+    return (
+      // 此处和react-redux 使用很类似  都是使用一个父容器   暴露出一个对象  子组件就可以使用钩子 构出共享的那个状态
+      &lt;Conatiner.Provider value={{ name: 'Jimmy' }}&gt;
+        &lt;h3&gt;共享状态组件UserContext&lt;/h3&gt;
+        &lt;Achild&gt;&lt;/Achild&gt;
+        &lt;Bchild&gt;&lt;/Bchild&gt;
+      &lt;/Conatiner.Provider&gt;
+    )
+  }
+
+  export default UserContext
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br></div></div><p>注意点：</p> <ul><li>一定要是在共享组件的子组件才可以使用<code>useContext()</code>钩出共享数据</li> <li>通过<code>React.createContext()</code>创建一个组件容器,使用方式和 react-redux 使用很类似 都是使用一个父容器 暴露出一个对象 子组件就可以使用钩子 构出共享的那个状态</li></ul> <h3 id="usereducer"><a href="#usereducer" class="header-anchor">#</a> useReducer</h3> <blockquote><p>状态管理钩子函数</p></blockquote> <div class="language- line-numbers-mode"><pre class="language-text"><code>  import { useReducer } from 'react'
+  const [state, dispatch] = useReducer(reducer,{count:0}) // 传递的两个参数分别是reducer函数和要管理的状态
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><p>可以通过结构赋值的方式，解构出一个 state 值，和一个 dispatch()触发不同的 action 执行的函数</p> <p>计数器案例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  function UseReducer() {
+    const reducer = (state, action) =&gt; {
+      const ActionFn = {
+        add: () =&gt; {
+          return { ...state, count: state.count + 1 }
+        },
+      }
+
+      return ActionFn[action.type]()
+    }
+
+    const [state, dispatch] = useReducer(reducer, { count: 0 })
+
+    const AddOne = () =&gt; {
+      dispatch({
+        type: 'add',
+      })
+    }
+
+    return (
+      &lt;div&gt;
+        &lt;h3&gt;UseReducer&lt;/h3&gt;
+        &lt;p&gt;now Count {state.count}&lt;/p&gt;
+        &lt;button onClick={AddOne}&gt;+1&lt;/button&gt;
+      &lt;/div&gt;
+    )
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h3 id="useeffect"><a href="#useeffect" class="header-anchor">#</a> useEffect</h3> <blockquote><p>useEffect()钩子起的主要是生命周期的作用，可以传递两个参数，分别是回调函数和数组</p></blockquote> <p>不同的参数，起的不同的效果</p> <ul><li>当只有一个回调函数的时候 这时候 useEffect(()=&gt;{})起的主要是一个 componendtDidmount()函数的作用 也就是当组件加载完毕之后会执行回调函数的代码</li> <li>当组件传递了第二个参数并且是一个数组的时候，这时候起的主要是一个 watcher 监听器的作用，只有这个数组变化了之后才会触发回调函数里面的内容</li> <li>useEffect()可以返回一个函数，这个函数里面的代码只有在组件注销卸载的时候才会被使用</li></ul> <p>案例:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  function AsyncPage({ user }) {
+    const [loading, setloading] = useState(true)  // 结构出来的名字是可以自定义的
+    const [person, setperson] = useState({})
+
+    useEffect(() =&gt; {
+      setloading(true)
+      setTimeout(() =&gt; {
+        setloading(false)
+        setperson({ user })
+      }, 3000)
+    }, [user])  // 传入的第二个参数数组，  只有当数组发生变化了之后，才会触发这个钩子
+
+    return (
+      &lt;div&gt;
+        &lt;h4&gt;异步页面&lt;/h4&gt;
+        {loading ? &lt;div&gt;Loading...&lt;/div&gt; : &lt;div&gt;所在的班级是{person.user}&lt;/div&gt;}
+      &lt;/div&gt;
+    )
+  }
+
+  function UseEffect() {
+    const [name, setname] = useState('Jimmy')
+    const [user, setUser] = useState('17信管')
+    const [show, setShow] = useState(true)
+
+    useEffect(() =&gt; {
+      setTimeout(() =&gt; {
+        setname('Jack')
+      }, 3000)
+
+      // useEffect() 钩子的返回值是一个函数的时候 当组件被注销的时候会被触发
+      return () =&gt; {
+        console.log('组件已经成功卸载 -- 通过useEffect() 钩子函数所监测到的结果')
+      }
+    })
+
+    const changeName = name =&gt; {
+      setUser(name)
+    }
+
+    const closeComponent = () =&gt; {
+      setShow(false)
+    }
+
+    return (
+      &lt;div&gt;
+        &lt;h3&gt;UseEffect钩子函数&lt;/h3&gt;
+        &lt;p&gt;作者是：{name}&lt;/p&gt;
+        {show ? &lt;AsyncPage user={user}&gt;&lt;/AsyncPage&gt; : &lt;div&gt;异步组件已经卸载&lt;/div&gt;}
+        &lt;button
+          onClick={() =&gt; {
+            changeName('17软开')
+          }}
+        &gt;
+          改成17软开
+        &lt;/button&gt;
+        &lt;button
+          onClick={() =&gt; {
+            changeName('17数媒')
+          }}
+        &gt;
+          改成17数媒
+        &lt;/button&gt;
+        &lt;button onClick={closeComponent}&gt;卸载组件&lt;/button&gt;
+        {/* &lt;p&gt;所在的班级是{user}&lt;/p&gt; */}
+      &lt;/div&gt;
+    )
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br></div></div><h3 id="自定义钩子函数"><a href="#自定义钩子函数" class="header-anchor">#</a> 自定义钩子函数</h3> <blockquote><p>当页面上比较多的地方需要使用到相同数据的时候，我们就可以做一层封装，返回出需要的数据</p></blockquote> <p>案例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  function userUse(user) {
+    const [loading, setloading] = useState(true)
+    const [person, setperson] = useState({})
+
+    useEffect(() =&gt; {
+      setloading(true)
+      setTimeout(() =&gt; {
+        setloading(false)
+        setperson({ user })
+      }, 3000)
+    }, [user])
+
+    return [loading, person]
+  }
+
+  function AsyncPage({ user }) {
+    const [loading, person] = userUse(user)
+
+    return (
+      &lt;div&gt;
+        &lt;h4&gt;异步页面&lt;/h4&gt;
+        {loading ? &lt;div&gt;Loading...&lt;/div&gt; : &lt;div&gt;所在的班级是{person.user}&lt;/div&gt;}
+      &lt;/div&gt;
+    )
+  }
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br></div></div></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2020/10/8 下午3:45:10</span></div></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c8d125c6 data-v-c8d125c6><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c8d125c6><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c8d125c6></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c8d125c6></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/assets/js/app.9ff872a9.js" defer></script><script src="/assets/js/3.76c72bef.js" defer></script><script src="/assets/js/1.0c580891.js" defer></script><script src="/assets/js/15.770d7082.js" defer></script>
+  </body>
+</html>
