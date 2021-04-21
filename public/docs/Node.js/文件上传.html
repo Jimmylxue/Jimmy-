@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Koa 2框架中接收文件，实现文件上传 | jimmy的个人空间</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/small.png">
+    <meta name="description" content="jimmy_study">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.f07c2460.css" as="style"><link rel="preload" href="/assets/js/app.9ff872a9.js" as="script"><link rel="preload" href="/assets/js/3.76c72bef.js" as="script"><link rel="preload" href="/assets/js/1.0c580891.js" as="script"><link rel="preload" href="/assets/js/13.9e21fca0.js" as="script"><link rel="prefetch" href="/assets/js/10.c16b16c3.js"><link rel="prefetch" href="/assets/js/11.b4c5a952.js"><link rel="prefetch" href="/assets/js/12.32ca13d5.js"><link rel="prefetch" href="/assets/js/14.d6c6f185.js"><link rel="prefetch" href="/assets/js/15.770d7082.js"><link rel="prefetch" href="/assets/js/16.08d17bd4.js"><link rel="prefetch" href="/assets/js/17.00487775.js"><link rel="prefetch" href="/assets/js/18.21b8daef.js"><link rel="prefetch" href="/assets/js/19.a530e76b.js"><link rel="prefetch" href="/assets/js/20.ec901ddf.js"><link rel="prefetch" href="/assets/js/21.80da4185.js"><link rel="prefetch" href="/assets/js/22.9ec45f35.js"><link rel="prefetch" href="/assets/js/23.3cdfd4ab.js"><link rel="prefetch" href="/assets/js/24.f9bdb8da.js"><link rel="prefetch" href="/assets/js/25.c4b0ca83.js"><link rel="prefetch" href="/assets/js/26.01d9163a.js"><link rel="prefetch" href="/assets/js/27.ea4d5687.js"><link rel="prefetch" href="/assets/js/28.b32a9a41.js"><link rel="prefetch" href="/assets/js/29.311cdc26.js"><link rel="prefetch" href="/assets/js/30.92193d10.js"><link rel="prefetch" href="/assets/js/31.b3701216.js"><link rel="prefetch" href="/assets/js/32.263820ce.js"><link rel="prefetch" href="/assets/js/33.fa2f5ab1.js"><link rel="prefetch" href="/assets/js/34.6244cf70.js"><link rel="prefetch" href="/assets/js/35.dad5f0c1.js"><link rel="prefetch" href="/assets/js/36.3ce961d7.js"><link rel="prefetch" href="/assets/js/37.8e6b16ea.js"><link rel="prefetch" href="/assets/js/38.d0102067.js"><link rel="prefetch" href="/assets/js/39.7c16f6d7.js"><link rel="prefetch" href="/assets/js/4.6d5af41e.js"><link rel="prefetch" href="/assets/js/40.476f6276.js"><link rel="prefetch" href="/assets/js/41.2264ce03.js"><link rel="prefetch" href="/assets/js/5.075ce251.js"><link rel="prefetch" href="/assets/js/6.0a775aa3.js"><link rel="prefetch" href="/assets/js/7.3d128d63.js"><link rel="prefetch" href="/assets/js/8.1467d35d.js"><link rel="prefetch" href="/assets/js/9.0530f413.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f07c2460.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-1c920fb4><div data-v-1c920fb4><div id="loader-wrapper" class="loading-wrapper" data-v-4cd7a24a data-v-1c920fb4 data-v-1c920fb4><div class="loader-main" data-v-4cd7a24a><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div><div data-v-4cd7a24a></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-6ef27168 data-v-1c920fb4 data-v-1c920fb4><h3 class="title" style="display:none;" data-v-6ef27168 data-v-6ef27168>jimmy的个人空间</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6ef27168 data-v-6ef27168><input type="password" value="" data-v-6ef27168> <span data-v-6ef27168>Konck! Knock!</span> <button data-v-6ef27168>OK</button></label> <div class="footer" style="display:none;" data-v-6ef27168 data-v-6ef27168><span data-v-6ef27168><i class="iconfont reco-theme" data-v-6ef27168></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6ef27168>vuePress-theme-reco</a></span> <span data-v-6ef27168><i class="iconfont reco-copyright" data-v-6ef27168></i> <a data-v-6ef27168><span data-v-6ef27168>jimmy</span>
+            
+          <span data-v-6ef27168>2020 - </span>
+          2021
+        </a></span></div></div> <div class="hide" data-v-1c920fb4><header class="navbar" data-v-1c920fb4><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/small.png" alt="jimmy的个人空间" class="logo"> <span class="site-name">jimmy的个人空间</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/introduct/aboutme.html" class="nav-link"><i class="iconfont undefined"></i>
+  about-author
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://gitee.com/jimmyxuexue" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/Node.js/文件上传.html" class="nav-link"><i class="iconfont undefined"></i>
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en/" class="nav-link"><i class="iconfont undefined"></i>
+  en-US
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-1c920fb4></div> <aside class="sidebar" data-v-1c920fb4><div class="personal-info-wrapper" data-v-44c89ab2 data-v-1c920fb4><img src="/small.png" alt="author-avatar" class="personal-img" data-v-44c89ab2> <h3 class="name" data-v-44c89ab2>
+    jimmy
+  </h3> <div class="num" data-v-44c89ab2><div data-v-44c89ab2><h3 data-v-44c89ab2>24</h3> <h6 data-v-44c89ab2>文章</h6></div> <div data-v-44c89ab2><h3 data-v-44c89ab2>18</h3> <h6 data-v-44c89ab2>标签</h6></div></div> <hr data-v-44c89ab2></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      About
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/introduct/aboutme.html" class="nav-link"><i class="iconfont undefined"></i>
+  about-author
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://gitee.com/jimmyxuexue" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Languages
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/docs/Node.js/文件上传.html" class="nav-link"><i class="iconfont undefined"></i>
+  zh-CN
+</a></li><li class="dropdown-item"><!----> <a href="/en/" class="nav-link"><i class="iconfont undefined"></i>
+  en-US
+</a></li></ul></div></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-6ef27168 data-v-1c920fb4><h3 class="title" style="display:none;" data-v-6ef27168 data-v-6ef27168>Koa 2框架中接收文件，实现文件上传</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-6ef27168 data-v-6ef27168><input type="password" value="" data-v-6ef27168> <span data-v-6ef27168>Konck! Knock!</span> <button data-v-6ef27168>OK</button></label> <div class="footer" style="display:none;" data-v-6ef27168 data-v-6ef27168><span data-v-6ef27168><i class="iconfont reco-theme" data-v-6ef27168></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-6ef27168>vuePress-theme-reco</a></span> <span data-v-6ef27168><i class="iconfont reco-copyright" data-v-6ef27168></i> <a data-v-6ef27168><span data-v-6ef27168>jimmy</span>
+            
+          <span data-v-6ef27168>2020 - </span>
+          2021
+        </a></span></div></div> <div data-v-1c920fb4><main class="page"><div class="page-title" style="display:none;"><h1>Koa 2框架中接收文件，实现文件上传</h1> <div data-v-d5d1b660><i class="iconfont reco-account" data-v-d5d1b660><span data-v-d5d1b660>jimmy</span></i> <i class="iconfont reco-date" data-v-d5d1b660><span data-v-d5d1b660>2020-11-22</span></i> <!----> <i class="iconfont reco-tag tags" data-v-d5d1b660><span class="tag-item" data-v-d5d1b660>koa</span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="koa-2框架中接收文件，实现文件上传"><a href="#koa-2框架中接收文件，实现文件上传" class="header-anchor">#</a> Koa 2框架中接收文件，实现文件上传</h2> <blockquote><p>文件上传这个操作是非常非常常用的，如果是使用JS直接写一个文件上传的代码的代码量是巨大的，且不容易理解，这里我也是在网上查了很久，可以使用<code>koa-multer</code>插件来实现文件上传</p></blockquote> <h3 id="传统的文件上传"><a href="#传统的文件上传" class="header-anchor">#</a> 传统的文件上传</h3> <ul><li><p>我过去的做法是先将然后文件全部转码成Base64的一长串字符串，将这一长串字符串传给后端，后端再根据字符串，使用<code>Buffer.from</code>逆解析，最终将图片保存在服务器上，我自己理解的这样的作法有以下的几点不好。</p> <ol><li>因为是将整个Base64字符串传递给后端，就会造成一个接口传递的数据量是500k上下甚至1M，极其的消耗性能</li> <li>需要做逆解析，使用path模块保存图片，等等操作，代码量极其的繁琐。</li></ol></li> <li><p>但是我还是写出来了，代码量过于庞大，这样写和脑溢血没有区别：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  const router = require('koa-router')()
+  const fs = require('fs')
+  const { resolve } = require('path')
+
+  // 获取目录，目的是方便后期存储
+  router.get('/getDir', async ctx =&gt; {
+    let objPath = resolve(__dirname, '../static')
+    let dir = fs.readdirSync(objPath)
+    ctx.body = { code: 200, message: '请求成功', result: dir }
+  })
+  
+  router.post('/getImgs', async ctx =&gt; {
+    let imgComponents = []
+    let objPath = resolve(__dirname, '../static')
+    fs.readdirSync(objPath).map(item =&gt; {
+      let json = {}
+      json.name = item
+      let newPath = resolve(objPath, item)
+      let anser = fs.readdirSync(newPath)
+      json.url = anser
+      imgComponents.push(json)
+    })
+    // map和forEach的区别 都是遍历数组元素  map会直接影响本身
+    imgComponents.map(item =&gt; {
+      item.url.map(function (items) {
+        this.items = 'http://127.0.0.1:666/' + items
+      })
+    })
+    ctx.body = {
+      code: 200,
+      message: '请求成功',
+      result: imgComponents,
+    }
+  })
+
+  // 上传的关键性代码
+  router.post('/uploadImgs', async ctx =&gt; {
+    let { filename, files } = ctx.request.body
+    // console.log(filename, files)
+    try {
+      files.map(item =&gt; {
+        let extend = '.' + item.imgname.split(';')[0].split('/')[1]
+        let img = Buffer.from(item.imgsrc, 'base64')
+        let imgname = `${Date.now()}${extend}`
+        let imgpostiton = resolve(__dirname, `../static/${filename}/${imgname}`)
+        fs.writeFileSync(imgpostiton, img)
+      })
+    } catch {
+      ctx.body = { code: 0, message: '添加失败' }
+    }
+    ctx.body = { code: 200, message: '请求成功' }
+  })
+  
+  // 删除
+  router.post('/delImg', async ctx =&gt; {
+    let { dir, filename } = ctx.request.body
+    // console.log(dir, filename)
+    let objdir = resolve(__dirname, `../static/${dir}/${filename}`)
+    // console.log(objdir)
+    try {
+      fs.unlinkSync(objdir)
+    } catch {
+      ctx.body = { code: 0, message: '删除失败' }
+    }
+    ctx.body = { code: 200, message: '操作成功' }
+  })
+
+  module.exports = router.routes()
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br></div></div></li></ul> <h3 id="使用koa-multer插件实现"><a href="#使用koa-multer插件实现" class="header-anchor">#</a> 使用<code>koa-multer</code>插件实现</h3> <blockquote><p>现在我们上传文件一边前后台都会使用插件，如前台我们使用element-UI，后台使用koa-multer</p></blockquote> <ul><li><p>前台传递给后台的数据类型是file - (binary)</p> <p><img src="https://img-blog.csdnimg.cn/20201122224203192.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70#pic_center" alt="传递的数据类型"></p> <p>因为是file的二进制数据流，所以使用Koa框架的时候是没有办法直接在<code>ctx.request.body</code>中获取的，就需要使用<code>koa-multer</code>插件注入到路由中，在路由的时候完成保存图片的操作</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>  1. 配置 multer 中间键
+
+  const multer = require('koa-multer')
+
+  let storage = multer.diskStorage({
+    //文件保存路径 这个路由是以项目文件夹 也就是和入口文件（如app.js同一个层级的）
+    destination: function (req, file, cb) {
+        cb(null, 'static/base/')
+    },
+    //修改文件名称
+    filename: function (req, file, cb) {
+        let fileFormat = (file.originalname).split(&quot;.&quot;);  //以点分割成数组，数组的最后一项就是后缀名
+        cb(null, 'Jimmy'+Date.now() + &quot;.&quot; + fileFormat[fileFormat.length - 1]);
+    }
+  })
+
+  let upload = multer({
+    storage: storage,
+    limits: {
+      fileSize: 1024*1024/2 // 限制512KB  
+    }
+  });
+
+  module.exports = upload
+
+  2. 在路由中使用
+
+  const router = require('koa-router')()
+
+  const upload = require('../common/uploadConfig')  // 引入我们的中间键
+
+  // 在路由的时候注入，之后只要这个路由一走，就会自动的将我们的图片上传到服务器，并且保存到我们 upload 中间键配置的保存文件目录下
+  router.post('/gallery',upload.single('file'),async ctx=&gt;{
+    console.log('new data',ctx.req.file.filename)
+
+    ctx.body = {code:200,result:'请求成功',filename:ctx.req.file.filename}
+  })
+
+  module.exports = router.routes()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br></div></div></li></ul> <h3 id="文件上传在有了插件之后开发真的是方便多了，站在巨人的肩膀上编程。"><a href="#文件上传在有了插件之后开发真的是方便多了，站在巨人的肩膀上编程。" class="header-anchor">#</a> 文件上传在有了插件之后开发真的是方便多了，站在巨人的肩膀上编程。</h3></div> <footer class="page-edit" style="display:none;"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">2020/11/22 下午10:53:03</span></div></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c8d125c6 data-v-c8d125c6><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c8d125c6><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c8d125c6></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c8d125c6></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/assets/js/app.9ff872a9.js" defer></script><script src="/assets/js/3.76c72bef.js" defer></script><script src="/assets/js/1.0c580891.js" defer></script><script src="/assets/js/13.9e21fca0.js" defer></script>
+  </body>
+</html>
