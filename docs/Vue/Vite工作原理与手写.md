@@ -1,5 +1,5 @@
 ---
-title: Vitel工作原理与手写
+title: Vite工作原理与手写
 date: 2021-07-11
 sidebar: auto
 categories:
