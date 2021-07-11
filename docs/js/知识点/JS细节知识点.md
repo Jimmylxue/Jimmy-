@@ -1,12 +1,11 @@
 ---
 title: JS细节知识点（请求头，rem，事件对象，自定义全局变量）
-date: 2020-06-11
+date: 2021-06-11
 sidebar: auto
 categories:
-  - JavaScript
+  - javascript
 tags:
   - 前端
-  - JavaScript
 ---
 
 ## 浏览器的请求头的使用
@@ -52,7 +51,7 @@ browserRedirect();
 > 移动端因为手机的尺寸不同，分辨率也不同，所以单单使用 px 来作为单位处理就会有很多问题，而使用 rem 计算来设置的单位就可以满足在不同尺寸的手机屏幕上显示效果基本是一致的
 
 ```javascript
-(function (win, doc) {
+(function(win, doc) {
   if (!win.addEventListener) return;
   var html = document.documentElement;
   function setFont() {

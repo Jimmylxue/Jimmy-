@@ -1,6 +1,5 @@
 # 拉去代码
 git pull
-
 # 安装依赖
 cnpm install && cnpm run build
 
