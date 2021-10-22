@@ -1,6 +1,9 @@
 ---
 title: react-redux 核心原理实现 - 附加 useMemo和UseCallBack
 date: 2021-09-14
+sticky:
+  - 置顶
+  - 3
 sidebar: auto
 categories:
   - 前端

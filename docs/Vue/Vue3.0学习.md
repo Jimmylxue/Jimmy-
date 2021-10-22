@@ -2,9 +2,6 @@
 title: Vue3.0 api学习记录
 date: 2020-10-10
 sidebar: auto
-sticky:
-  - 置顶
-  - 5
 categories:
   - Vue
 tags:
@@ -138,7 +135,7 @@ ref 本质：
 - Vue 系统就是通过对象是否含有这个属性 并且值为 true 来判断一个对象是否是 ref 对象
 - 我们自己可以使用 vue 向我们提供的 isRef(), isReactive() 这种 API 来判断一个对象是什么类型的响应式对象
 
-  ```
+  ```js
     setup() {
       const name = ref('Jimmy')
       const age = reactive({
@@ -210,7 +207,7 @@ shallowRef 本质
 
 demo
 
-```
+```js
   const state = reactive({ name: 'Jimmy', age: 22 })
   const refss = ref({ name: 'jack' })
   const obj = toRaw(state)
@@ -239,7 +236,7 @@ demo
 
 demo
 
-```
+```js
   setup() {
     let obj = { name: 'Jimmy', age: 22 }
     console.log(obj) // {name: "Jimmy", age: 22}
@@ -259,7 +256,7 @@ demo
 
 demo
 
-```
+```js
   setup(){
     const obj = { name:'Jimmy',age:22 }
     const obj1 = {name:'kangkang',age:18}
@@ -296,9 +293,9 @@ toRef 和 ref 的区别
 
 demo
 
-```
-  const obj = {name:'Henry',age:22}
-  const state = toRefs(obj)
+```js
+const obj = { name: "Henry", age: 22 };
+const state = toRefs(obj);
 ```
 
 toRefs、ref、toRef 的区别
@@ -320,31 +317,31 @@ toRefs、ref、toRef 的区别
 
 demo
 
-```
-  function myRef(value){
-    return customRef((track, trigger)=>{
-      return {
-        get:()=>{
-          track()  // 追踪数据，即这个数据的变化会影响原始的数据
-          return value
-        },
-        set:(newVal)=>{
-          value = newVal
-          trigger() //  触发界面UI的更新
-          return value
-        }
-      }
-    })
-  }
-  export default {
-    setup(){
-      const state = myRef(18)
-      function change(){
-        state.value++
-      }
-      return {state,change}
+```js
+function myRef(value) {
+  return customRef((track, trigger) => {
+    return {
+      get: () => {
+        track(); // 追踪数据，即这个数据的变化会影响原始的数据
+        return value;
+      },
+      set: (newVal) => {
+        value = newVal;
+        trigger(); //  触发界面UI的更新
+        return value;
+      },
+    };
+  });
+}
+export default {
+  setup() {
+    const state = myRef(18);
+    function change() {
+      state.value++;
     }
-  }
+    return { state, change };
+  },
+};
 ```
 
 ### ref 获取元素
@@ -358,32 +355,32 @@ Vue3.x 和 Vue2.x 使用 ref 的不同
 - Vue3.x
   DOM 元素设置一个 ref 属性值，在 setup()函数设置一个 ref 变量，变量名和 ref 绑定的值名字一致，且 ref 的值为 null
 
-  ```
-    <template>
-      <div class="refs">
-        <h3 ref="box">Ref获取元素</h3>
-      </div>
-    </template>
+  ```js
+  <template>
+    <div class="refs">
+      <h3 ref="box">Ref获取元素</h3>
+    </div>
+  </template>;
 
-    export default {
-      /*
+  export default {
+    /*
         Vue的 ComponsitionApi 将生命周期函数也给抽离出来了  抽离出来的名字都是以onMountend onCreated这样
           生命周期函数传递一个回调函数，  回调函数里面写的内容会在ComponsitionAPI转成Option Api的过程中注入到各自的生命周期内部
       */
-      setup(){
-        /*
+    setup() {
+      /*
           ref和Vue2.x一样也是可以用来获取页面的HTML元素，  需要注意两点：
             ref的变量名要和html的ref属性值是同一个名字
             ref在设置值的时候要给 值为 null
         */
-        const box = ref(null)
-        onMounted(()=>{
-          console.log('mounted',box.value)  //  mounted <h3 data-v-f9d94688>​Ref获取元素​</h3>​
-        })
-        console.log('componsition',box.value)  // null
-        return {box}
-      }
-    }
+      const box = ref(null);
+      onMounted(() => {
+        console.log("mounted", box.value); //  mounted <h3 data-v-f9d94688>​Ref获取元素​</h3>​
+      });
+      console.log("componsition", box.value); // null
+      return { box };
+    },
+  };
   ```
 
 ### 声明周期函数
@@ -392,18 +389,18 @@ Vue3.x 和 Vue2.x 使用 ref 的不同
 
 demo
 
-```
-  import {ref,onMounted} from 'vue'
-  export default {
-    setup(){
-      const box = ref(null)
-      onMounted(()=>{
-        console.log('mounted',box.value)  //  mounted <h3 data-v-f9d94688>​Ref获取元素​</h3>​
-      })
-      console.log('componsition',box.value)  // null
-      return {box}
-    }
-  }
+```js
+import { ref, onMounted } from "vue";
+export default {
+  setup() {
+    const box = ref(null);
+    onMounted(() => {
+      console.log("mounted", box.value); //  mounted <h3 data-v-f9d94688>​Ref获取元素​</h3>​
+    });
+    console.log("componsition", box.value); // null
+    return { box };
+  },
+};
 ```
 
 vue3 为我们提供了完整的生命周期函数（类似于生命周期钩子），如：onMounted 等等，传递一个回调函数

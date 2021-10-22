@@ -2,6 +2,9 @@
 title: Vue3设计思路 -- 响应式API
 date: 2021-07-15
 sidebar: auto
+sticky:
+  - 置顶
+  - 7
 categories:
   - javascript
 tags:
@@ -24,28 +27,28 @@ tags:
 - `composition API`就是完全的函数式的编程方式，配合上`reactive`响应式，可以非常好的实现逻辑的复用，甚至是不同项目之间的复用。
 
   ```javascript
-  const { createApp, reactive } = Vue
+  const { createApp, reactive } = Vue;
   // useState 就可以写在其他的单文件里面 方便日后复用，这里写在一起主要是为了体现逻辑的抽离
   function useState() {
-  	// 状态和方法 等等都写在一起，告别了反复横跳
-  	const state = reactive({
-  		count: 1,
-  	})
-  	setInterval(() => {
-  		state.count++
-  	}, 1000)
-  	return state
+    // 状态和方法 等等都写在一起，告别了反复横跳
+    const state = reactive({
+      count: 1,
+    });
+    setInterval(() => {
+      state.count++;
+    }, 1000);
+    return state;
   }
 
   const app = createApp({
-  	setup() {
-  		const state = useState()
-  		return { state }
-  		console.log('hello world')
-  	},
-  })
+    setup() {
+      const state = useState();
+      return { state };
+      console.log("hello world");
+    },
+  });
 
-  app.mount('#app')
+  app.mount("#app");
   ```
 
 - 因为 vue3 的响应式是基于`Proxy`的，所以为了这套更优雅的代码也不得不做出让步，没有办法兼容不支持`Proxy`的浏览器，如果浏览器不支持`Proxy`，就只能使用 Vue2 了
@@ -74,45 +77,45 @@ tags:
 
 ```javascript
 function reactive(obj) {
-	const proxy = new Proxy(obj, {
-		get(target, key) {
-			/*
+  const proxy = new Proxy(obj, {
+    get(target, key) {
+      /*
         render函数第一次渲染的时候会获取引用的值 所以第一次渲染就会走到这个 get 方便我们开始做依赖收集
       */
-			track(target, key) // 触发依赖收集
-			return target[key]
-		},
-		set(target, key, value) {
-			target[key] = value
-			console.log('proxy', key)
-			/*
+      track(target, key); // 触发依赖收集
+      return target[key];
+    },
+    set(target, key, value) {
+      target[key] = value;
+      console.log("proxy", key);
+      /*
         修改的时候，去依赖收集的数据结构中 找到对应的key 把 key 对应的 更新函数都执行一遍，这就触发了页面的响应式
       */
-			trigger(target, key)
-			// app.update()
-		},
-		/*
+      trigger(target, key);
+      // app.update()
+    },
+    /*
       proxy 的优势出了可以监听get 和 set之外 还是可以监听另外十多种情况，这个Object.defineProperty()做不到的
         这个是语言层面上的升级
     */
-	})
-	return proxy
+  });
+  return proxy;
 }
 
 // 副作用函数 -- 这里是为了暂时的存放每一个副作用函数，当副作用函数已经和依赖关系建立好了之后再清除空间
-const effectStack = []
+const effectStack = [];
 
 function effect(fn) {
-	const eff = function() {
-		try {
-			effectStack.push(eff)
-			fn() // 执行 最重要的 render函数 页面才更新
-		} finally {
-			effectStack.pop()
-		}
-	}
-	eff()
-	return eff
+  const eff = function() {
+    try {
+      effectStack.push(eff);
+      fn(); // 执行 最重要的 render函数 页面才更新
+    } finally {
+      effectStack.pop();
+    }
+  };
+  eff();
+  return eff;
 }
 
 // 依赖收集函数
@@ -124,93 +127,93 @@ function effect(fn) {
     }
   }
 */
-const trackMap = {}
+const trackMap = {};
 
 function track(target, key) {
-	/* 
+  /* 
     effectStack 是临时存放副作用函数的地方，每次关系建立完成之后就会再清空掉，所以获取数组的最后一个元素即可
   */
-	const effect = effectStack[effectStack.length - 1]
-	if (effect) {
-		let map = trackMap[target]
-		if (!map) {
-			map = trackMap[target] = {}
-		}
+  const effect = effectStack[effectStack.length - 1];
+  if (effect) {
+    let map = trackMap[target];
+    if (!map) {
+      map = trackMap[target] = {};
+    }
 
-		let deps = map[key]
-		if (!deps) {
-			deps = map[key] = []
-		}
+    let deps = map[key];
+    if (!deps) {
+      deps = map[key] = [];
+    }
 
-		// 将副作用函数放入 deps
-		if (deps.indexOf(effect) === -1) {
-			deps.push(effect)
-		}
-	}
+    // 将副作用函数放入 deps
+    if (deps.indexOf(effect) === -1) {
+      deps.push(effect);
+    }
+  }
 }
 
 // 触发 指定的 target 下指定的key 下所有的 副作用函数都执行一遍
 function trigger(target, key) {
-	// 数据结构类似 {state:{title:[effect,effect]}}
-	const map = trackMap[target]
-	if (map) {
-		const effects = map[key]
-		effects.forEach(effect => effect())
-	}
+  // 数据结构类似 {state:{title:[effect,effect]}}
+  const map = trackMap[target];
+  if (map) {
+    const effects = map[key];
+    effects.forEach((effect) => effect());
+  }
 }
 
 function createApp(config) {
-	let app = {}
-	app.mount = function(id) {
-		this.rootDOM = document.getElementById(id)
+  let app = {};
+  app.mount = function(id) {
+    this.rootDOM = document.getElementById(id);
 
-		if (!config.render) {
-			config.render = this.compile(this.rootDOM.innerHTML)
-		}
+    if (!config.render) {
+      config.render = this.compile(this.rootDOM.innerHTML);
+    }
 
-		if (config.setup) {
-			this.setupCtx = config.setup()
-		} else {
-			this.dataCtx = config.data()
-		}
+    if (config.setup) {
+      this.setupCtx = config.setup();
+    } else {
+      this.dataCtx = config.data();
+    }
 
-		this.proxy = new Proxy(this, {
-			get(target, key) {
-				if (key in target.setupCtx) {
-					return target.setupCtx[key]
-				} else {
-					return target.dataCtx[key]
-				}
-			},
-			set(target, key, value) {
-				if (key in target.setupCtx) {
-					target.setupCtx[key] = value
-				} else {
-					target.dataCtx[key] = value
-				}
-			},
-		})
+    this.proxy = new Proxy(this, {
+      get(target, key) {
+        if (key in target.setupCtx) {
+          return target.setupCtx[key];
+        } else {
+          return target.dataCtx[key];
+        }
+      },
+      set(target, key, value) {
+        if (key in target.setupCtx) {
+          target.setupCtx[key] = value;
+        } else {
+          target.dataCtx[key] = value;
+        }
+      },
+    });
 
-		// update 函数就是指定的 副作用函数
-		this.update = effect(() => {
-			// 这里会去 proxy 拿值 拿值就会触发 get get触发 收集依赖 这样就将整个环节顺滑的串联起来了
-			const el = config.render.call(this.proxy)
-			this.rootDOM.innerHTML = ''
-			this.rootDOM.appendChild(el)
-		})
+    // update 函数就是指定的 副作用函数
+    this.update = effect(() => {
+      // 这里会去 proxy 拿值 拿值就会触发 get get触发 收集依赖 这样就将整个环节顺滑的串联起来了
+      const el = config.render.call(this.proxy);
+      this.rootDOM.innerHTML = "";
+      this.rootDOM.appendChild(el);
+    });
 
-		this.update()
+    this.update();
 
-		return this
-	}
-	app.compile = function(template) {
-		return function() {
-			const h3 = document.createElement('h3')
-			h3.textContent = this.title
-			return h3
-		}
-	}
-	return app
+    return this;
+  };
+  app.compile = function(template) {
+    return function() {
+      const h3 = document.createElement("h3");
+      h3.textContent = this.title;
+      return h3;
+    };
+  };
+  return app;
 }
 ```
 

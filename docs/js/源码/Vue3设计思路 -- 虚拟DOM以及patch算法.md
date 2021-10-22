@@ -2,6 +2,9 @@
 title: Vue3设计思路 -- 虚拟DOM以及patch算法
 date: 2021-07-16
 sidebar: auto
+sticky:
+  - 置顶
+  - 6
 categories:
   - javascript
 tags:

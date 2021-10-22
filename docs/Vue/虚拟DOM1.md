@@ -22,13 +22,13 @@ tags:
 
   因为浏览器本身的原生 dom 是非常非常庞大的一个数据，如果直接使用浏览器的原生 dom 来操作的话，会消耗我们宝贵的资源性能。
 
-  ```
-    let div = document.createElement('div')
-    let str = ''
-    for (let key in div) {
-      str = str + key + '__'
-    }
-    console.log(str)
+  ```js
+  let div = document.createElement("div");
+  let str = "";
+  for (let key in div) {
+    str = str + key + "__";
+  }
+  console.log(str);
   ```
 
   ![一个空的原生DOM的数据量](https://img-blog.csdnimg.cn/20200822234149562.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NjI0MDE2Mg==,size_16,color_FFFFFF,t_70#pic_center)
@@ -37,7 +37,7 @@ tags:
 
 ## 虚拟 DOM 的基本数据结构
 
-```
+```js
   {
     tag:'div',
     data:{
@@ -82,44 +82,44 @@ tags:
 
 代码已经上传一遍在仓库了，在[这里](https://gitee.com/jimmyxuexue/front_end_architecture/tree/master/%E8%99%9A%E6%8B%9FDOM)
 
-```
+```js
 const VnodeType = {
-HTML: 'HTML',
-TEXT: 'TEXT',
-COMPONENT: 'COMPONENT',
-}
+  HTML: "HTML",
+  TEXT: "TEXT",
+  COMPONENT: "COMPONENT",
+};
 
 const childFlag = {
-  EMPTY: 'EMPTY',
-  SINGLE: 'SINGLE',
-  MULTIPE: 'MULTIPE',
-}
+  EMPTY: "EMPTY",
+  SINGLE: "SINGLE",
+  MULTIPE: "MULTIPE",
+};
 
 function createElement(tag, data, childen = null) {
-  let flag
-  let childrenFlag
-  if (typeof tag == 'string') {
+  let flag;
+  let childrenFlag;
+  if (typeof tag == "string") {
     // 普通的HTML标签
-    flag = VnodeType.HTML
-  } else if (typeof tag == 'function') {
-    flag = VnodeType.COMPONENT
+    flag = VnodeType.HTML;
+  } else if (typeof tag == "function") {
+    flag = VnodeType.COMPONENT;
   } else {
-    flag = VnodeType.TEXT
+    flag = VnodeType.TEXT;
   }
 
   if (childen == null) {
-    childrenFlag = childFlag.EMPTY
+    childrenFlag = childFlag.EMPTY;
   } else if (Array.isArray(childen)) {
-    let length = childen.length
+    let length = childen.length;
     if (length == 0) {
-      childrenFlag = childFlag.EMPTY
+      childrenFlag = childFlag.EMPTY;
     } else {
-      childrenFlag = childFlag.MULTIPE
+      childrenFlag = childFlag.MULTIPE;
     }
   } else {
     // 文本  文本也是单个元素
-    childrenFlag = childFlag.SINGLE
-    childen = createTextVnode(childen + '')
+    childrenFlag = childFlag.SINGLE;
+    childen = createTextVnode(childen + "");
   }
   // 返回Vnode
   return {
@@ -129,7 +129,7 @@ function createElement(tag, data, childen = null) {
     childen,
     childrenFlag, // children的类型
     el: null,
-  }
+  };
 }
 
 // 新建文本类型的vnode
@@ -141,80 +141,79 @@ function createTextVnode(texts) {
     data: null,
     childen: texts,
     childenFlag: childFlag.EMPTY, //  文本类型的子元素是空的
-  }
+  };
 }
 
 // 渲染函数  需要传递  要渲染的虚拟DOM 以及容器（父元素）
 function render(vnode, container) {
   // 区分首次渲染和再次渲染
-  mount(vnode, container)
+  mount(vnode, container);
 }
 
 // 首次渲染
 function mount(vnode, container) {
-  let { flag } = vnode //  通过解构赋值 先获取虚拟DOM的类型
+  let { flag } = vnode; //  通过解构赋值 先获取虚拟DOM的类型
   if (flag == VnodeType.HTML) {
-    mountElement(vnode, container)
+    mountElement(vnode, container);
   } else if (flag == VnodeType.TEXT) {
-    mountText(vnode, container)
+    mountText(vnode, container);
   }
 }
 
 function mountElement(vnode, container) {
-  let dom = document.createElement(vnode.tag)
-  vnode.el = dom
+  let dom = document.createElement(vnode.tag);
+  vnode.el = dom;
   // let data = vnode.data // 属性
 
-  let { data, childen, childrenFlag } = vnode
+  let { data, childen, childrenFlag } = vnode;
   // 挂载data属性
   if (data) {
     for (let key in data) {
       // 分别是 dom元素 键名称  初始值 新值
-      patchData(dom, key, null, data[key])
+      patchData(dom, key, null, data[key]);
     }
   }
 
   if (childrenFlag != childFlag.EMPTY) {
     if (childrenFlag == childFlag.SINGLE) {
       // 文本
-      mount(childen, dom)
+      mount(childen, dom);
     } else if (childrenFlag == childFlag.MULTIPE) {
       for (let i = 0; i < childen.length; i++) {
-        mount(childen[i], dom)
+        mount(childen[i], dom);
       }
     }
   }
 
-  container.appendChild(dom)
+  container.appendChild(dom);
 }
 
 function mountText(vnode, container) {
-  let dom = document.createTextNode(vnode.childen)
-  vnode.el = dom
-  container.appendChild(dom)
+  let dom = document.createTextNode(vnode.childen);
+  vnode.el = dom;
+  container.appendChild(dom);
 }
 
 function patchData(dom, key, before, now) {
   switch (key) {
-    case 'style':
+    case "style":
       for (const key in now) {
-        dom.style[key] = now[key]
+        dom.style[key] = now[key];
       }
-      break
-    case 'class':
-      dom.classList.add(now)
-      break
+      break;
+    case "class":
+      dom.classList.add(now);
+      break;
     default:
-      if (key[0] == '@') {
+      if (key[0] == "@") {
         // 点击事件的处理
         if (now) {
-          dom.addEventListener(key.slice(1), now)
+          dom.addEventListener(key.slice(1), now);
         }
       } else {
         // 直接在dom上以键值对的形式添加属性
-        dom.setAttribute(key, now)
+        dom.setAttribute(key, now);
       }
   }
 }
-
 ```
