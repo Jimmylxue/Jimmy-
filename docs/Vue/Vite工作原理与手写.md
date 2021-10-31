@@ -2,6 +2,9 @@
 title: Vite工作原理与手写
 date: 2021-07-11
 sidebar: auto
+sticky:
+  - 置顶
+  - 4
 categories:
   - 前端
 tags:
@@ -45,16 +48,16 @@ tags:
 
 ```javascript
 function rewriteFileName(filename) {
-	// 这个 filename 就是请求的 路径全称 如： import {createApp} from 'vue'
-	return filename.replace(/ from ['"](.*)['"]/g, (s1, s2) => {
-		// s1表示进入匹配的原字符 s2表示原子组的字符
-		if (s2.startsWith('/') || s2.startsWith('./') || s2.startsWith('../')) {
-			return s1
-		} else {
-			// 裸模块  就是像 vue 这样的模块 我们重新 然后让到 node_modules 里面去找
-			return ` from '/@modules/${s2}'`
-		}
-	})
+  // 这个 filename 就是请求的 路径全称 如： import {createApp} from 'vue'
+  return filename.replace(/ from ['"](.*)['"]/g, (s1, s2) => {
+    // s1表示进入匹配的原字符 s2表示原子组的字符
+    if (s2.startsWith("/") || s2.startsWith("./") || s2.startsWith("../")) {
+      return s1;
+    } else {
+      // 裸模块  就是像 vue 这样的模块 我们重新 然后让到 node_modules 里面去找
+      return ` from '/@modules/${s2}'`;
+    }
+  });
 }
 ```
 
@@ -63,13 +66,13 @@ function rewriteFileName(filename) {
 > 这里可以直接选择使用 `fs.readFileSync` 这个同步方法，但是文件如果比较大会造成阻塞，所以还是封装个异步方法比较好
 
 ```javascript
-const path = require('path')
+const path = require("path");
 function getFile(url) {
-	return new Promise((reslove, reject) => {
-		fs.readFile(path.join(__dirname, url), 'utf-8', (err, data) => {
-			reslove(data)
-		})
-	})
+  return new Promise((reslove, reject) => {
+    fs.readFile(path.join(__dirname, url), "utf-8", (err, data) => {
+      reslove(data);
+    });
+  });
 }
 ```
 
@@ -78,121 +81,124 @@ function getFile(url) {
 > .vue 文件是是核心我们需要处理的地方，就需要用到前面提到的两个库了
 
 ```javascript
-if (url.indexOf('.vue') > -1) {
-	// SFC 请求
-	// url 有可能是单纯的 .vue  也有可能是 .vue?type=xxx 带有查询参
-	let file = await getFile(url.split('?')[0])
-	let ret = compilerSFC.parse(file)
-	if (!query.type) {
-		// 没有查询参
-		// 获取脚本部分的内容
-		let scriptContent = ret.descriptor.script.content
-		// 替换迷人导出为常量,方便日后修改
-		let script = scriptContent.replace('export default ', 'const __script = ')
-		ctx.type = 'application/javascript'
-		ctx.body = `
+if (url.indexOf(".vue") > -1) {
+  // SFC 请求
+  // url 有可能是单纯的 .vue  也有可能是 .vue?type=xxx 带有查询参
+  let file = await getFile(url.split("?")[0]);
+  let ret = compilerSFC.parse(file);
+  if (!query.type) {
+    // 没有查询参
+    // 获取脚本部分的内容
+    let scriptContent = ret.descriptor.script.content;
+    // 替换迷人导出为常量,方便日后修改
+    let script = scriptContent.replace("export default ", "const __script = ");
+    ctx.type = "application/javascript";
+    ctx.body = `
             ${rewriteFileName(script)}
             // 解析template
             import {render as __render} from '${url}?type=template'
             __script.render = __render
-            export default __script`
-	} else if (query.type === 'template') {
-		// 有查询参
-		const tpl = ret.descriptor.template.content
-		// console.log('tpllllllll', tpl)
-		// console.log(compilerDOM.compile(tpl))
-		const render = compilerDOM.compile(tpl, { mode: 'module' }).code
-		ctx.type = 'application/javascript'
-		ctx.body = rewriteFileName(render)
-	}
+            export default __script`;
+  } else if (query.type === "template") {
+    // 有查询参
+    const tpl = ret.descriptor.template.content;
+    // console.log('tpllllllll', tpl)
+    // console.log(compilerDOM.compile(tpl))
+    const render = compilerDOM.compile(tpl, { mode: "module" }).code;
+    ctx.type = "application/javascript";
+    ctx.body = rewriteFileName(render);
+  }
 }
 ```
 
 #### 完整代码
 
 ```javascript
-const koa = require('koa')
-const fs = require('fs')
-const path = require('path')
-const compilerSFC = require('@vue/compiler-sfc') // 用于解析 vue文件的 script 部分
-const compilerDOM = require('@vue/compiler-dom') // 用于接续 vue文件中的 template 部分
+const koa = require("koa");
+const fs = require("fs");
+const path = require("path");
+const compilerSFC = require("@vue/compiler-sfc"); // 用于解析 vue文件的 script 部分
+const compilerDOM = require("@vue/compiler-dom"); // 用于接续 vue文件中的 template 部分
 
-const app = new koa()
+const app = new koa();
 
-app.use(async ctx => {
-	const { url, query } = ctx.request
-	if (url === '/') {
-		// 处理的是首页
-		let res = await getFile('./index.html')
-		// console.log(res)
-		ctx.type = 'text/html'
-		ctx.body = res
-	} else if (url.endsWith('.js')) {
-		// 以js文件结尾 处理js文件加载
-		ctx.type = 'application/javascript'
-		let res = await getFile(url)
-		ctx.body = rewriteFileName(res)
-	} else if (url.startsWith('/@modules/')) {
-		// 裸模块架子啊处
-		let modeName = url.replace('/@modules/', '') // 重新获取裸模块名字 如 vue
-		let search = path.join(__dirname, '../../../node_modules', modeName)
-		let suffix = require(path.join(search, '/package.json')).module
-		ctx.type = 'application/javascript'
-		let files = fs.readFileSync(path.join(search, suffix), 'utf8')
-		ctx.body = rewriteFileName(files)
-	} else if (url.indexOf('.vue') > -1) {
-		// SFC 请求
-		// url 有可能是单纯的 .vue  也有可能是 .vue?type=xxx 带有查询参
-		let file = await getFile(url.split('?')[0])
-		let ret = compilerSFC.parse(file)
-		if (!query.type) {
-			// 没有查询参
-			// 获取脚本部分的内容
-			let scriptContent = ret.descriptor.script.content
-			// 替换迷人导出为常量,方便日后修改
-			let script = scriptContent.replace('export default ', 'const __script = ')
-			ctx.type = 'application/javascript'
-			ctx.body = `
+app.use(async (ctx) => {
+  const { url, query } = ctx.request;
+  if (url === "/") {
+    // 处理的是首页
+    let res = await getFile("./index.html");
+    // console.log(res)
+    ctx.type = "text/html";
+    ctx.body = res;
+  } else if (url.endsWith(".js")) {
+    // 以js文件结尾 处理js文件加载
+    ctx.type = "application/javascript";
+    let res = await getFile(url);
+    ctx.body = rewriteFileName(res);
+  } else if (url.startsWith("/@modules/")) {
+    // 裸模块架子啊处
+    let modeName = url.replace("/@modules/", ""); // 重新获取裸模块名字 如 vue
+    let search = path.join(__dirname, "../../../node_modules", modeName);
+    let suffix = require(path.join(search, "/package.json")).module;
+    ctx.type = "application/javascript";
+    let files = fs.readFileSync(path.join(search, suffix), "utf8");
+    ctx.body = rewriteFileName(files);
+  } else if (url.indexOf(".vue") > -1) {
+    // SFC 请求
+    // url 有可能是单纯的 .vue  也有可能是 .vue?type=xxx 带有查询参
+    let file = await getFile(url.split("?")[0]);
+    let ret = compilerSFC.parse(file);
+    if (!query.type) {
+      // 没有查询参
+      // 获取脚本部分的内容
+      let scriptContent = ret.descriptor.script.content;
+      // 替换迷人导出为常量,方便日后修改
+      let script = scriptContent.replace(
+        "export default ",
+        "const __script = "
+      );
+      ctx.type = "application/javascript";
+      ctx.body = `
                 ${rewriteFileName(script)}
                 // 解析template
                 import {render as __render} from '${url}?type=template'
                 __script.render = __render
                 export default __script
-            `
-			console.log(compilerSFC.parse(file))
-		} else if (query.type === 'template') {
-			// 有查询参
-			const tpl = ret.descriptor.template.content
-			const render = compilerDOM.compile(tpl, { mode: 'module' }).code
-			ctx.type = 'application/javascript'
-			ctx.body = rewriteFileName(render)
-		}
-	}
-})
+            `;
+      console.log(compilerSFC.parse(file));
+    } else if (query.type === "template") {
+      // 有查询参
+      const tpl = ret.descriptor.template.content;
+      const render = compilerDOM.compile(tpl, { mode: "module" }).code;
+      ctx.type = "application/javascript";
+      ctx.body = rewriteFileName(render);
+    }
+  }
+});
 
 function rewriteFileName(filename) {
-	return filename.replace(/ from ['"](.*)['"]/g, (s1, s2) => {
-		// s1表示进入匹配的原字符 s2表示原子组的字符
-		if (s2.startsWith('/') || s2.startsWith('./') || s2.startsWith('../')) {
-			return s1
-		} else {
-			// 裸模块  就是像 vue 这样的模块 我们重新 然后让到 node_modules 里面去找
-			return ` from '/@modules/${s2}'`
-		}
-	})
+  return filename.replace(/ from ['"](.*)['"]/g, (s1, s2) => {
+    // s1表示进入匹配的原字符 s2表示原子组的字符
+    if (s2.startsWith("/") || s2.startsWith("./") || s2.startsWith("../")) {
+      return s1;
+    } else {
+      // 裸模块  就是像 vue 这样的模块 我们重新 然后让到 node_modules 里面去找
+      return ` from '/@modules/${s2}'`;
+    }
+  });
 }
 
 function getFile(url) {
-	return new Promise((reslove, reject) => {
-		fs.readFile(path.join(__dirname, url), 'utf-8', (err, data) => {
-			reslove(data)
-		})
-	})
+  return new Promise((reslove, reject) => {
+    fs.readFile(path.join(__dirname, url), "utf-8", (err, data) => {
+      reslove(data);
+    });
+  });
 }
 
 app.listen(666, () => {
-	console.log('server is running on port 666!')
-})
+  console.log("server is running on port 666!");
+});
 ```
 
 ### 总结

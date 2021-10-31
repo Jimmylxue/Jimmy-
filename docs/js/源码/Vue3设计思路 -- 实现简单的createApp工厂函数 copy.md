@@ -2,6 +2,9 @@
 title: Vue3设计思路 -- 实现简单的createApp工厂函数
 date: 2021-07-14
 sidebar: auto
+sticky:
+  - 置顶
+  - 8
 categories:
   - javascript
 tags:
