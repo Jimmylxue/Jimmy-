@@ -1,5 +1,5 @@
 ---
-title: 控制台小游戏
+title: JS 高阶知识点 -- 持续更新
 date: 2021-11-17
 sidebar: auto
 categories:
